@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci  # Usa npm ci para instalaciones limpias
+    
+    - name: Run linting
+      run: npm run lint  # Si tienes ESLint configurado
+    
+    - name: Run unit tests
+      run: npm run test:unit
+      env:
+        CI: true
+    
+    - name: Run integration tests
+      run: npm run test:integration
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+      if: success()  # Solo si todo lo anterior pasó
+    
+  deploy:
+    needs: build  # Depende del job 'build'
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Solo para pushes a main
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist  # Cambia esto según tu estructura
