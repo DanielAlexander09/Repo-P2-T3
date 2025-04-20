@@ -1,0 +1,26 @@
+{
+  "name": "repo-p2-t3",
+  "version": "1.0.0",
+  "description": "Este proyecto demuestra un pipeline CI/CD básico usando Github Actions.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielAlexander09/Repo-P2-T3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielAlexander09/Repo-P2-T3/issues"
+  },
+  "homepage": "https://github.com/DanielAlexander09/Repo-P2-T3#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
